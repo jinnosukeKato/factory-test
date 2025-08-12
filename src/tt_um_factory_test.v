@@ -35,7 +35,7 @@ module tt_um_factory_test (
     if (~rst_n_i) cnt2 <= 0;
     else cnt2 <= cnt2 - 1;
 
-  assign uo_out  = ~rst_n ? ui_in : ui_in[0] ? cnt1[7:0] : uio_in;
+  assign uo_out  = ~rst_n ? ui_in : ui_in[0] ? cnt1[31:24] : cnt2[31:24];
   assign uio_out = ui_in[0] ? cnt1[7:0] : cnt2[7:0];
   assign uio_oe  = rst_n && ui_in[0] ? 8'hff : 8'h00;
 
