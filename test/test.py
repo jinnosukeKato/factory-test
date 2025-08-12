@@ -29,6 +29,8 @@ async def test_loopback(dut):
         dut.uio_in.value = i
         await ClockCycles(dut.clk, 1)
         assert dut.uo_out.value == i
+    
+    dut.ui_in.value = 1
 
     # When under reset: Output is uio_in, uio is in input mode
     dut.rst_n.value = 0

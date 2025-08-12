@@ -20,18 +20,23 @@ module tt_um_factory_test (
 );
 
   reg rst_n_i;
-  reg [7:0] cnt;
+  reg [7:0] cnt1;
+  reg [7:0] cnt2;
 
   always @(posedge clk or negedge rst_n)
     if (~rst_n) rst_n_i <= 1'b0;
     else rst_n_i <= 1'b1;
 
   always @(posedge clk or negedge rst_n_i)
-    if (~rst_n_i) cnt <= 0;
-    else cnt <= cnt + 1;
+    if (~rst_n_i) cnt1 <= 0;
+    else cnt1 <= cnt1 + 1;
+  
+  always @(posedge clk or negedge rst_n_i)
+    if (~rst_n_i) cnt2 <= 0;
+    else cnt2 <= cnt2 - 1;
 
-  assign uo_out  = ~rst_n ? ui_in : ui_in[0] ? cnt : uio_in;
-  assign uio_out = ui_in[0] ? cnt : 8'h00;
+  assign uo_out  = ~rst_n ? ui_in : ui_in[0] ? cnt1 : uio_in;
+  assign uio_out = ui_in[0] ? cnt1 : cnt2;
   assign uio_oe  = rst_n && ui_in[0] ? 8'hff : 8'h00;
 
   // avoid linter warning about unused pins:
